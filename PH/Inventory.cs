@@ -25,19 +25,31 @@ namespace PH
             Price = _price;
             Quantity = _quantity;
         }
-        public List<Inventory> showInventory()
+        public List<Inventory> getInventoryList()
         {
             return inventoryList;
         }
-        public void editInventory(string edit)
+        public void newItem(string description, int typeID, double price, int quantity = 0)
         {
+            bool doesNotAlreadyExist = true;
 
-        }
-        public void newItem(string description, int typeID, double price)
-        {
-            Inventory item = new Inventory(typeID, description, price);
+            foreach (Inventory good in inventoryList)
+            {
+                if (good.ToStringI().Split(',')[0].Contains(typeID.ToString()))
+                {
+                    doesNotAlreadyExist = false;
+                }
+            }
+            if (price >= 0.00 && quantity >= 0 && doesNotAlreadyExist == true)
+            {
+                Inventory item = new Inventory(typeID, description, price, quantity);
 
-            inventoryList.Add(item);
+                inventoryList.Add(item);
+            }
+            else
+            {
+                throw new Exception("price and quantity, if one is defined, need to be above or equal to 0, the typeID must not already exist");
+            }
         }
         public List<Inventory> seachAndRetriveI(string searchTerm)
         {
