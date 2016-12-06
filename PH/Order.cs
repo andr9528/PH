@@ -9,12 +9,10 @@ namespace PH
     public class Order
     {
         static List<Order> orderList = new List<Order>();
-        static List<Customer> customerList = new List<Customer>();
-        static List<Date> dateList = new List<Date>();
-        static List<Inventory> itemList = new List<Inventory>();
 
-        public Date Date { get; set; }
-        public Inventory Inventory { get; set; }
+        public Date date = new Date();
+        public Customer customer = new Customer();
+        public Inventory inventory = new Inventory();
 
         public Date DateSend { get; set; }
         public Date DateDelivery { get; set; }
@@ -26,33 +24,31 @@ namespace PH
         {
 
         }
-        public Order(Customer _customer, Date _date1, Date _date2, Inventory _item, int _quantity)
+        public Order(Customer _customer, Date _dateOrder, Date _dateDelivery, Inventory _item, int _quantity)
         {
             Customer = _customer;
-            DateSend = _date1;
-            DateDelivery = _date2;
+            DateSend = _dateOrder;
+            DateDelivery = _dateDelivery;
             Item = _item;
             Quantity = _quantity;
         }
 
-        public void newOrder(int customerID, int dateIDOrder, int dateIDDelivery, int itemID, int quantity) // doesn't handle dates being in a different order then 1, 2, 3...
+        public void newOrder(string customerID, string dateIDOrder, string dateIDDelivery, string itemID, int quantity)
         {
-            List<Customer> customer = new List<Customer>();
+            List<Customer> customers = new List<Customer>();
             List<Date> dates = new List<Date>();
-            string customerIDS = "" + customerID;
-            string itemIDS = "" + itemID;
-            string dateIDOrderS = "" + dateIDOrder;
-            string dateIDDeliveryS = "" + dateIDDelivery;
-            customer.AddRange(Customer.seachAndRetriveC(customerIDS));
-            dates.AddRange(Date.searchAndRetriveD(dateIDOrderS, dateIDDeliveryS));
+            List<Inventory> item = new List<Inventory>();
+
+            customers.AddRange(customer.seachAndRetriveC(customerID));
+            dates.AddRange(date.searchAndRetriveD(dateIDOrder, dateIDDelivery));
+            item.AddRange(inventory.seachAndRetriveI(itemID));
 
             if (dates[0].ToStringD().Split('.')[3].Contains("Order")
                 && dates[1].ToStringD().Split('.')[3].Contains("Delivery")
-                && itemList[0].ToStringI().Split(',')[0].Contains(itemIDS)
-                && int.Parse(itemList[0].ToStringI().Split(',')[4]) >= quantity
-                && customer.Count >= 1) 
+                && int.Parse(item[0].ToStringI().Split(',')[3]) >= quantity
+                && customers.Count >= 1) 
             {
-                Order order = new Order(customer[0], dateList[dateIDOrder], dateList[dateIDDelivery], itemList[0], quantity);
+                Order order = new Order(customers[0], dates[0], dates[1], item[0], quantity);
 
                 orderList.Add(order);
             }
@@ -61,31 +57,15 @@ namespace PH
                 throw new Exception("One of the chosen data does not exist, or you have asked for more then there is in the system");
             }  
         }
-        public void getLists() // does not handle null lists
-        {
-            if (Customer.getCustomerList().Count != 0 && Customer.getCustomerList().Any())
-            {
-                customerList = Customer.getCustomerList();
-            }
-            if (Date.getDateList().Count != 0 && Date.getDateList().Any())
-            {
-                dateList = Date.getDateList();
-            }
-            if (Inventory.getInventoryList().Count != 0 && Inventory.getInventoryList().Any())
-            {
-                itemList = Inventory.getInventoryList();
-            }
-        }
+
         public List<Order> getOrders()
         {
             return orderList;
         }
-        public void clearLists()
+        public void clearOrders()
         {
             orderList.Clear();
-            customerList.Clear();
-            dateList.Clear();
-            itemList.Clear();
+
         }
         
     }

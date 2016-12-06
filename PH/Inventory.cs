@@ -64,7 +64,7 @@ namespace PH
             }
             if (output.Count == 0)
             {
-                throw new Exception("Search term did not match anything");
+                throw new Exception("Search term did not find the desired Item");
             }
             return output;
         }

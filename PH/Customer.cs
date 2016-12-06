@@ -56,9 +56,9 @@ namespace PH
                     output.Add(customer);
                 }
             }
-            if (output.Count < 1 || output == null)
+            if (output.Count < 1)
             {
-                throw new Exception("Search term did not match anything");
+                throw new Exception("Search term did not find any Customers");
             }
             return output;
         }

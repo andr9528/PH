@@ -86,7 +86,7 @@ namespace PH
                     output.Add(date);
                 }
             }
-            if (output.Count <= 1 || output == null)
+            if (output.Count <= 1)
             {
                 throw new Exception("Did not get all desired dates");
             }
