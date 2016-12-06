@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace PH
 {
-    class Order
+    public class Order
     {
-        List<Order> orderList = new List<Order>();
-        List<Customer> customerList = new List<Customer>();
-        List<Date> dateList = new List<Date>();
-        List<Inventory> itemList = new List<Inventory>();
+        static List<Order> orderList = new List<Order>();
+        static List<Customer> customerList = new List<Customer>();
+        static List<Date> dateList = new List<Date>();
+        static List<Inventory> itemList = new List<Inventory>();
 
         public Date Date { get; set; }
         public Inventory Inventory { get; set; }
@@ -35,19 +35,24 @@ namespace PH
             Quantity = _quantity;
         }
 
-        public void newOrder(string customerID, int dateIDSend, int dateIDDelivery, string typeID, int quantity)
+        public void newOrder(int customerID, int dateIDOrder, int dateIDDelivery, int itemID, int quantity) // doesn't handle dates being in a different order then 1, 2, 3...
         {
             List<Customer> customer = new List<Customer>();
-            customer.AddRange(Customer.seachAndRetriveC(customerID));
-            string dateIDSendS = "" + dateIDSend;
+            List<Date> dates = new List<Date>();
+            string customerIDS = "" + customerID;
+            string itemIDS = "" + itemID;
+            string dateIDOrderS = "" + dateIDOrder;
             string dateIDDeliveryS = "" + dateIDDelivery;
+            customer.AddRange(Customer.seachAndRetriveC(customerIDS));
+            dates.AddRange(Date.searchAndRetriveD(dateIDOrderS, dateIDDeliveryS));
 
-            if (dateList[dateIDSend].ToStringD().Split('.')[4].Contains(dateIDSendS)
-                && dateList[dateIDDelivery].ToStringD().Split('.')[4].Contains(dateIDDeliveryS)
-                && itemList[0].ToStringI().Split(',')[0].Contains(typeID)
-                && int.Parse(itemList[0].ToStringI().Split(',')[4]) >= quantity)
+            if (dates[0].ToStringD().Split('.')[3].Contains("Order")
+                && dates[1].ToStringD().Split('.')[3].Contains("Delivery")
+                && itemList[0].ToStringI().Split(',')[0].Contains(itemIDS)
+                && int.Parse(itemList[0].ToStringI().Split(',')[4]) >= quantity
+                && customer.Count >= 1) 
             {
-                Order order = new Order(customer[0], dateList[dateIDSend], dateList[dateIDDelivery], itemList[0], quantity);
+                Order order = new Order(customer[0], dateList[dateIDOrder], dateList[dateIDDelivery], itemList[0], quantity);
 
                 orderList.Add(order);
             }
@@ -56,15 +61,31 @@ namespace PH
                 throw new Exception("One of the chosen data does not exist, or you have asked for more then there is in the system");
             }  
         }
-        public void getLists()
+        public void getLists() // does not handle null lists
         {
-            customerList = Customer.getCustomerList();
-            dateList = Date.getDateList();
-            itemList = Inventory.getInventoryList();
+            if (Customer.getCustomerList().Count != 0 && Customer.getCustomerList().Any())
+            {
+                customerList = Customer.getCustomerList();
+            }
+            if (Date.getDateList().Count != 0 && Date.getDateList().Any())
+            {
+                dateList = Date.getDateList();
+            }
+            if (Inventory.getInventoryList().Count != 0 && Inventory.getInventoryList().Any())
+            {
+                itemList = Inventory.getInventoryList();
+            }
         }
         public List<Order> getOrders()
         {
             return orderList;
+        }
+        public void clearLists()
+        {
+            orderList.Clear();
+            customerList.Clear();
+            dateList.Clear();
+            itemList.Clear();
         }
         
     }

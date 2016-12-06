@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace PH
 {
-    class Date
+    public class Date
     {
-        List<Date> dateList = new List<Date>();
+        static List<Date> dateList = new List<Date>();
         public int Day { get; internal set; }
         public int Month { get; internal set; }
         public int Year { get; internal set; }
@@ -63,6 +63,34 @@ namespace PH
             output = Day + "." + Month + "." + Year + "." + Type + "." + DateID;
 
             return output; 
+        }
+        public void clearDateList()
+        {
+            dateList.Clear();
+        }
+        public List<Date> searchAndRetriveD(string orderDate, string DeliveryDate)
+        {
+            List<Date> output = new List<Date>();
+
+            foreach (Date date in dateList)
+            {
+                if (date.ToStringD().Split('.')[4].Contains(orderDate))
+                {
+                    output.Add(date);
+                }
+            }
+            foreach (Date date in dateList)
+            {
+                if (date.ToStringD().Split('.')[4].Contains(DeliveryDate))
+                {
+                    output.Add(date);
+                }
+            }
+            if (output.Count <= 1 || output == null)
+            {
+                throw new Exception("Did not get all desired dates");
+            }
+            return output;
         }
     }
 }

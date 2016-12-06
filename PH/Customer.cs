@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace PH
 {
-    class Customer
+    public class Customer
     {
-        List<Customer> customerList = new List<Customer>();
+        static List<Customer> customerList = new List<Customer>();
         public int CustomerID { get; internal set; }
         public string Name { get; internal set; }
         public string Address { get; internal set; }
@@ -56,7 +56,7 @@ namespace PH
                     output.Add(customer);
                 }
             }
-            if (output.Count == 0)
+            if (output.Count < 1 || output == null)
             {
                 throw new Exception("Search term did not match anything");
             }
@@ -69,6 +69,10 @@ namespace PH
             output = CustomerID + ", " + Name + ", " + Address;
         
             return output;
+        }
+        public void clearCustomerList()
+        {
+            customerList.Clear();
         }
     }
 }

@@ -8,7 +8,7 @@ namespace PH
 {
     public class Inventory
     {
-        List<Inventory> inventoryList = new List<Inventory>();
+        static List<Inventory> inventoryList = new List<Inventory>();
         public int TypeID { get; set; }
         public int Quantity { get; set; }
         public string Desription { get; set; }
@@ -27,7 +27,7 @@ namespace PH
         }
         public List<Inventory> getInventoryList()
         {
-            return inventoryList;
+            return inventoryList; 
         }
         public void newItem(string description, int typeID, double price, int quantity = 0)
         {
@@ -80,6 +80,10 @@ namespace PH
             output = TypeID + ", " + Desription + ", " + priceS + ", " + Quantity;
 
             return output;
+        }
+        public void clearInventoryList()
+        {
+            inventoryList.Clear();
         }
     }
 }
