@@ -14,13 +14,13 @@ namespace PH_UI
     class Menu
     {
 
-        List<MenuItem> menu = new List<MenuItem>();
+        public List<MenuItem> menu = new List<MenuItem>();
         internal void ShowMenu()
         {
             Console.Clear();
             int counter = 0;
 
-            Console.Write(counter + ": Exit");
+            Console.WriteLine(counter + ": Exit");
             counter++;
 
             foreach (MenuItem item in menu)
@@ -36,5 +36,7 @@ namespace PH_UI
 
             menu.Add(item);
         }
+
+
     }
 }
