@@ -9,17 +9,16 @@ namespace UnitTest
     public class OrderTest
     {
 
-        Order order = new Order();
-
+        Repository repo = new Repository();
         List<Order> orderList = new List<Order>();
 
         [TestInitialize()]
         public void ClearLists()
         {
-            order.clearOrders();
-            order.customer.clearCustomerList();
-            order.date.clearDateList();
-            order.inventory.clearInventoryList();
+            repo.clearOrderList();
+            repo.clearCustomerList();
+            repo.clearDateList();
+            repo.clearInventoryList();
         }
 
         [TestMethod]
@@ -27,7 +26,7 @@ namespace UnitTest
         {
             try
             {
-                order.newOrder("1", "1", "2", "1", 20);
+                repo.newOrder("1", "1", "2", "1", 20);
             }
             catch (Exception ex)
             {
@@ -37,11 +36,11 @@ namespace UnitTest
         [TestMethod]
         public void CreatingAOrderThatFails2()
         {
-            order.customer.newCustomer(1, "Marc", "Odensevej 111");
+            repo.newCustomer(1, "Marc", "Odensevej 111");
 
             try
             {
-                order.newOrder("1", "1", "2", "1", 20);
+                repo.newOrder("1", "1", "2", "1", 20);
             }
             catch (Exception ex)
             {
@@ -51,12 +50,12 @@ namespace UnitTest
         [TestMethod]
         public void CreatingAOrderThatFails3()
         {
-            order.customer.newCustomer(1, "Marc", "Odensevej 111");
-            order.date.newDate(3, 2, 1996, "Order", 1);
+            repo.newCustomer(1, "Marc", "Odensevej 111");
+            repo.newDate(3, 2, 1996, "Order", 1);
 
             try
             {
-                order.newOrder("1", "1", "2", "1", 20);
+                repo.newOrder("1", "1", "2", "1", 20);
             }
             catch (Exception ex)
             {
@@ -66,13 +65,13 @@ namespace UnitTest
         [TestMethod]
         public void CreatingAOrderThatFails4()
         {
-            order.customer.newCustomer(1, "Marc", "Odensevej 111");
-            order.date.newDate(3, 2, 1996, "Order", 1);
-            order.date.newDate(4, 12, 2006, "Delivery", 2);
+            repo.newCustomer(1, "Marc", "Odensevej 111");
+            repo.newDate(3, 2, 1996, "Order", 1);
+            repo.newDate(4, 12, 2006, "Delivery", 2);
 
             try
             {
-                order.newOrder("1", "1", "2", "1", 20);
+                repo.newOrder("1", "1", "2", "1", 20);
             }
             catch (Exception ex)
             {
@@ -82,14 +81,14 @@ namespace UnitTest
         [TestMethod]
         public void CreatingAOrderThatFails5()
         {
-            order.customer.newCustomer(1, "Marc", "Odensevej 111");
-            order.date.newDate(3, 2, 1996, "Order", 1);
-            order.date.newDate(4, 12, 2006, "Delivery", 2);
-            order.inventory.newItem("Candy", 1, 5.95);
+            repo.newCustomer(1, "Marc", "Odensevej 111");
+            repo.newDate(3, 2, 1996, "Order", 1);
+            repo.newDate(4, 12, 2006, "Delivery", 2);
+            repo.newItem("Candy", 1, 5.95);
 
             try
             {
-                order.newOrder("1", "1", "2", "1", 20);
+                repo.newOrder("1", "1", "2", "1", 20);
             }
             catch (Exception ex)
             {
@@ -99,14 +98,14 @@ namespace UnitTest
         [TestMethod]
         public void CreatingAOrderThatIsSuccesfull()
         {
-            order.customer.newCustomer(1, "Marc", "Odensevej 111");
-            order.date.newDate(3, 2, 1996, "Order", 1);
-            order.date.newDate(4, 12, 2006, "Delivery", 2);
-            order.inventory.newItem("Candy", 1, 5.95, 30);
+            repo.newCustomer(1, "Marc", "Odensevej 111");
+            repo.newDate(3, 2, 1996, "Order", 1);
+            repo.newDate(4, 12, 2006, "Delivery", 2);
+            repo.newItem("Candy", 1, 5.95, 30);
 
-            order.newOrder("1", "1", "2", "1", 20);
+            repo.newOrder("1", "1", "2", "1", 20);
 
-            orderList = order.getOrders();
+            orderList = repo.getOrders();
 
             Assert.AreEqual(1, orderList.Count);
         }

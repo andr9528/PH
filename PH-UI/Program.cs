@@ -10,7 +10,7 @@ namespace PH_UI
     class Program
     {
         Menu mainMenu = new Menu();
-        Order order = new Order();
+        Repository repo = new Repository();
         int listen = -1;
         bool confirmConvert;
         static void Main(string[] args)
@@ -88,7 +88,7 @@ namespace PH_UI
             int.TryParse(Console.ReadLine(), out quantity);
 
 
-            order.inventory.newItem(description, id, price, quantity);
+            repo.newItem(description, id, price, quantity);
 
             Console.WriteLine("You created the item with the description " + description + ", with a price of " + price + ", with the id " + id + " and the quantity in storage of " + quantity);
             Console.ReadLine();
@@ -115,7 +115,7 @@ namespace PH_UI
             Console.WriteLine("Give me the type of date, is it a delivery or order date? accepts order or delivery");
             type = Console.ReadLine();
 
-            order.date.newDate(day, month, year, type, id);
+            repo.newDate(day, month, year, type, id);
 
             Console.WriteLine("You created the date " + day + "." + month + "." + year + " which is a " + type + " with a id of " + id);
             Console.ReadLine();
@@ -137,7 +137,7 @@ namespace PH_UI
             Console.WriteLine("Give me the address for this person");
             address = Console.ReadLine();
 
-            order.customer.newCustomer(id, name, address);
+            repo.newCustomer(id, name, address);
 
             Console.WriteLine("You just created a new custumer with the name " + name + ", the addres " + address + " and the id " + id);
             Console.ReadLine();

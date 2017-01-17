@@ -8,7 +8,6 @@ namespace PH
 {
     public class Order
     {
-        
 
         public Date DateSend { get; set; }
         public Date DateDelivery { get; set; }

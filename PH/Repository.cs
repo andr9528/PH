@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace PH
 {
-    class Repository
+    public class Repository
     {
-        static List<Customer> customerList = new List<Customer>();
-        static List<Date> dateList = new List<Date>();
-        static List<Inventory> inventoryList = new List<Inventory>();
-        static List<Order> orderList = new List<Order>();
+        static protected List<Customer> customerList = new List<Customer>();
+        static protected List<Date> dateList = new List<Date>();
+        static protected List<Inventory> inventoryList = new List<Inventory>();
+        static protected List<Order> orderList = new List<Order>();
 
         // Customer
 
@@ -34,7 +34,7 @@ namespace PH
             }
         }
         
-        public List<Customer> seachAndRetriveC(string searchTerm)
+        internal List<Customer> seachAndRetriveC(string searchTerm)
         {
             List<Customer> output = new List<Customer>();
 
@@ -90,7 +90,7 @@ namespace PH
                 throw new Exception("invalid day or month, type can only be *Order* or *Delivery*, the dateID must not already exist ");
             }
         }
-        public List<Date> searchAndRetriveD(string orderDate, string DeliveryDate)
+        internal List<Date> searchAndRetriveD(string orderDate, string DeliveryDate)
         {
             List<Date> output = new List<Date>();
 
@@ -147,7 +147,7 @@ namespace PH
                 throw new Exception("price and quantity, if one is defined, need to be above or equal to 0, the typeID must not already exist");
             }
         }
-        public List<Inventory> seachAndRetriveI(string searchTerm)
+        internal List<Inventory> seachAndRetriveI(string searchTerm)
         {
             List<Inventory> output = new List<Inventory>();
 
@@ -204,7 +204,7 @@ namespace PH
         {
             return orderList;
         }
-        public void clearOrders()
+        public void clearOrderList()
         {
             orderList.Clear();
         }
