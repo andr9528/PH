@@ -210,7 +210,7 @@ namespace PH
         }
         // General
 
-        public void clearAllLists()
+        public void clearAllLists() // Possibly doesn't handle null lists
         {
             orderList.Clear();
             inventoryList.Clear();
